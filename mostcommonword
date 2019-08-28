@@ -1,0 +1,41 @@
+class Solution {
+public:
+    string mostCommonWord(string paragraph, vector<string>& banned) {
+     
+        unordered_set<string> bannedWords;
+        for(string & s : banned)
+            bannedWords.insert(s); // for a fast lookup
+        bannedWords.insert(""); // to tackle an edge case
+        map<string, int> topWords;
+        unordered_set<string> punctuations; // for convenience sake
+        punctuations.insert("!");
+        punctuations.insert("'");
+        punctuations.insert("?");
+        punctuations.insert(",");
+        punctuations.insert(";");
+        punctuations.insert(".");
+        string current = "";
+        for(char & c : paragraph)
+        {
+            if(c == ' ' || punctuations.count(string(1, c)))
+            {
+                if(!bannedWords.count(current))
+                {
+                    cout << current << "!";
+                    ++topWords[current];
+                }
+                current = "";
+            }
+            else current += char(tolower(c));
+        }
+        if(!bannedWords.count(current))
+            ++topWords[current];
+        pair<int, string> result(0, "");
+        for(auto & it : topWords)
+        {
+            if(it.second > result.first)
+                result = {it.second, it.first};
+        }
+        return result.second;
+    }
+};
