@@ -1,0 +1,25 @@
+bool compare (const string& a, const string& b)
+{
+    int n1 = a.find(" ");
+    int n2 = b.find(" ");
+    if(a.substr(n1+1) == b.substr(n2+1)) return a.substr(0, n1) < b.substr(0,n2);
+    else return a.substr(n1+1) < b.substr(n2+1);
+}
+
+class Solution {
+public:
+    vector<string> reorderLogFiles(vector<string>& logs) 
+    {
+        vector<string> digits;
+        vector<string> letters;
+        for(string s: logs)
+        {
+            int pos = s.find(" ") + 1;
+            if(s[pos] >= '0' && s[pos] <= '9') digits.push_back(s);
+            else letters.push_back(s);
+        }
+        sort(letters.begin(), letters.end(), compare);
+        letters.insert(letters.end(), digits.begin(), digits.end());
+        return letters;
+    }
+};
