@@ -6,7 +6,7 @@ public:
     }
     
     void union1(int i, int j, vector<int> &parent){
-        parent[find(j)] = find(i, parent);
+        parent[find(j, parent)] = find(i, parent);
     }
     
     int find(int i, vector<int> &parent) {
